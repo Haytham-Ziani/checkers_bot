@@ -2,13 +2,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Tuple
 
-Coordinate = Tuple[int, int]  # (row, col)
+Coordinate = Tuple[int, int]
 
 @dataclass
 class Move:
-    """Represents a single checker move from a StartingMoveLocation to a TargetingMoveLocation.
-    A move may include multiple jumps; in that case, 'path' contains visited squares in order.
-    """
+    # Single checker move from a StartingMoveLocation to a TargetingMoveLocation.
     StartingMoveLocation: Coordinate
     TargetingMoveLocation: Coordinate
     path: List[Coordinate]
@@ -17,11 +15,10 @@ class Move:
 
 class GameBoard:
     """
-    GameBoard maintains an 8x8 Checkers board with the following piece encoding:
+    8x8 Checkers board with the following piece encoding:
       'w' = white man (human), 'W' = white king
       'b' = black man (bot),   'B' = black king
       '.' = empty
-    Dark squares are those where (r + c) % 2 == 1 and are playable.
     White moves 'up' (towards decreasing rows); Black moves 'down' (towards increasing rows).
     Capture is mandatory when available.
     """
@@ -31,10 +28,10 @@ class GameBoard:
 
     def _InitialBoard(self) -> List[List[str]]:
         b = [['.' for _ in range(self.size)] for _ in range(self.size)]
-        # standard American checkers initial placement on dark squares
+
         for r in range(3):
             for c in range(self.size):
-                if (r + c) % 2 == 1:
+                if (r + c) % 2 == 1: # dark square
                     b[r][c] = 'b'
         for r in range(5, 8):
             for c in range(self.size):
@@ -42,31 +39,31 @@ class GameBoard:
                     b[r][c] = 'w'
         return b
 
-    def Clone(self) -> 'GameBoard':
+    def Clone(self) -> 'GameBoard': 
         g = GameBoard()
         g.board = [row[:] for row in self.board]
         return g
 
-    def Inside(self, r: int, c: int) -> bool:
+    def Inside(self, r: int, c: int) -> bool: # is (r,c) on the board?
         return 0 <= r < self.size and 0 <= c < self.size
 
-    def PieceAt(self, rc: Coordinate) -> str:
+    def PieceAt(self, rc: Coordinate) -> str: # return piece at (r,c)
         r, c = rc
         return self.board[r][c]
 
-    def SetPiece(self, rc: Coordinate, piece: str) -> None:
+    def SetPiece(self, rc: Coordinate, piece: str) -> None: # place/replace piece at (r,c)
         r, c = rc
         self.board[r][c] = piece
 
-    def IsTerminal(self) -> bool:
+    def IsTerminal(self) -> bool: # game over? either side has no pieces or no legal moves
         return (not self._HasPieces('w') or not self._HasPieces('b') or
                 (len(self.AllLegalMoves('w')) == 0) or (len(self.AllLegalMoves('b')) == 0))
 
-    def _HasPieces(self, side: str) -> bool:
+    def _HasPieces(self, side: str) -> bool: # does side ('w' or 'b') have any pieces left?
         targets = ('w', 'W') if side == 'w' else ('b', 'B')
         return any(cell in targets for row in self.board for cell in row)
 
-    def _Directions(self, piece: str):
+    def _Directions(self, piece: str): # movement directions for piece
         if piece in ('w', 'W'):
             ups = [(-1, -1), (-1, 1)]
             if piece == 'W':  # king
@@ -78,7 +75,7 @@ class GameBoard:
                 return downs + [(-1, -1), (1, 1)]
             return downs
 
-    def _Opponents(self, side: str):
+    def _Opponents(self, side: str): 
         return ('b', 'B') if side == 'w' else ('w', 'W')
 
     def AllLegalMoves(self, side: str) -> List[Move]:
@@ -115,7 +112,7 @@ class GameBoard:
                           captured=[])
                 quiets.append(mv)
 
-        def try_captures(fr: int, fc: int, piece_local: str, path, captured):
+        def try_captures(fr: int, fc: int, piece_local: str, path, captured): # recursive multi-jump
             found = False
             for dr, dc in self._Directions(piece_local):
                 mr, mc = fr + dr, fc + dc

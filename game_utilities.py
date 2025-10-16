@@ -1,7 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, Any, List
-
 from game_board import GameBoard
 
 @dataclass
@@ -47,9 +46,7 @@ def PrettyAnalytics(move_index: int, who: str, m: MoveAnalytics) -> str:
     )
 
 def HeuristicScore(board: GameBoard) -> int:
-    """Simple but strong heuristic evaluating material and advancement.
-    Positive is good for black (bot), negative for white (human).
-    """
+    # Positive is good for black (bot), negative for white (human).
     value = 0
     for r in range(board.size):
         for c in range(board.size):
