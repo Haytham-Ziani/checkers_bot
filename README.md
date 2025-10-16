@@ -15,10 +15,10 @@ python playing_the_game_gui.py
 - Bot responds within the configured time/depth.
 - **Analytics are printed to the console**.
 
-## Configure S/T/P
-- `SecondsBudget` ∈ {1,2,3}
-- `PlyLimit` ∈ {5,6,7,8,9}
-- `UseOrdering`: True/False
+## Configuration
+- Choose a Search Algorithm.
+- Enter a time limit: `SecondsBudget` ∈ {1,2,3}
+- Enter Search depth: `PlyLimit` ∈ {5,6,7,8,9}
 
 ## Requirements
 - Python 3.x
