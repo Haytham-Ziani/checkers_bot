@@ -23,7 +23,7 @@ class SearchToolBox:
         self.Analytics = MoveAnalytics()
 
 
-    def ChooseMove(self, board: GameBoard, side: str, SecondsBudget: int = 2, PlyLimit: int = 7) -> Move:
+    def ChooseMove(self, board: GameBoard, side: str, SecondsBudget: int = 2, PlyLimit: int = 7) -> Move:  # We interactively ask the user for T and P. The defaults are for fallback safety.
         """Iterative deepening up to PlyLimit or SecondsBudget seconds.
         side: 'b' for bot, 'w' for human (if you ever make the bot play white).
         Returns the best Move for 'side'.

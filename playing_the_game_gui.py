@@ -2,7 +2,6 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import messagebox
 import time
-
 from game_board import GameBoard, Move
 from search_tool_box import SearchToolBox
 from game_utilities import CumulativeAnalytics, PrettyAnalytics, MoveAnalytics
@@ -11,7 +10,7 @@ BOARD_SIZE = 8
 SQUARE = 80
 PADDING = 30
 WINDOW_W = SQUARE * BOARD_SIZE + PADDING * 2
-WINDOW_H = SQUARE * BOARD_SIZE + PADDING * 2 + 50  # room for status
+WINDOW_H = SQUARE * BOARD_SIZE + PADDING * 2 + 50 
 
 DARK = "#6b4f3a"
 LIGHT = "#f0d9b5"
@@ -36,7 +35,7 @@ class TkCheckersApp:
         self.canvas = tk.Canvas(root, width=WINDOW_W, height=WINDOW_H, highlightthickness=0)
         self.canvas.pack()
 
-        # --- Buttons for New Game / Exit ---
+        # Buttons for New Game / Exit
         button_frame = tk.Frame(root)
         button_frame.pack(pady=5)
 
@@ -272,7 +271,6 @@ def main():
     app.Bot = SearchToolBox(mode=mode)
     app.DrawBoard()
     root.mainloop()
-
 
 if __name__ == "__main__":
     main()

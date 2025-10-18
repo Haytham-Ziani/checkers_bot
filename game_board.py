@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from typing import List, Tuple
 
 Coordinate = Tuple[int, int]
-
 @dataclass
 class Move:
     # Single checker move from a StartingMoveLocation to a TargetingMoveLocation.
@@ -15,12 +14,8 @@ class Move:
 
 class GameBoard:
     """
-    8x8 Checkers board with the following piece encoding:
-      'w' = white man (human), 'W' = white king
-      'b' = black man (bot),   'B' = black king
-      '.' = empty
-    White moves 'up' (towards decreasing rows); Black moves 'down' (towards increasing rows).
-    Capture is mandatory when available.
+    8x8 Checkers board with the following piece encoding: 'w' = white man (human), 'W' = white king; 'b' = black man (bot),   'B' = black king; '.' = empty
+    White moves 'up' (towards decreasing rows); Black moves 'down' (towards increasing rows). Capture is mandatory when available.
     """
     def __init__(self) -> None:
         self.size = 8
